@@ -1,6 +1,7 @@
 package com.ryo.dgswcinside.service;
 
 import com.ryo.dgswcinside.common.BaseResponse;
+import com.ryo.dgswcinside.dto.request.DeleteRequest;
 import com.ryo.dgswcinside.dto.request.PublishPostRequest;
 import com.ryo.dgswcinside.dto.request.UpdatePostRequest;
 import com.ryo.dgswcinside.dto.response.CommentResponse;
@@ -24,16 +25,13 @@ public class PostService {
     @Autowired private CommentRepository commentRepository;
 
     public BaseResponse<String> save(PublishPostRequest req) {
-        Post post = new Post();
-        post.setPassword(req.password());
-        post.setNickname(req.nickname());
-        post.setTitle(req.title());
-        post.setContent(req.content());
+        Post post = Post.of(req);
         postRepository.save(post);
         return BaseResponse.ok("게시글 등록 성공");
     }
 
-    public BaseResponse<String> delete(Long id) {
+    public BaseResponse<String> delete(Long id, DeleteRequest req) {
+        if (!req.password().equals(postRepository.findById(id).orElseThrow().getPassword())) throw new RuntimeException("잘못된 비밀번호");
         postRepository.deleteById(id);
         return BaseResponse.ok("게시글 삭제 성공");
     }
@@ -41,8 +39,7 @@ public class PostService {
     public BaseResponse<String> update(Long id, UpdatePostRequest req) {
         Post post = postRepository.findById(id).orElseThrow();
         if (!post.getPassword().equals(req.password())) throw new RuntimeException("잘못된 비밀번호");
-        post.setTitle(req.title());
-        post.setContent(req.content());
+        post.update(req);
         postRepository.save(post);
         return BaseResponse.ok("게시글 수정 성공");
     }

@@ -1,5 +1,7 @@
 package com.ryo.dgswcinside.entity;
 
+import com.ryo.dgswcinside.dto.request.PublishCommentRequest;
+import com.ryo.dgswcinside.dto.request.UpdateCommentRequest;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
@@ -34,4 +36,17 @@ public class Comment {
 
     @Column(name = "created_at", insertable = false, updatable = false)
     private LocalDateTime createdAt;
+
+    public static Comment of(PublishCommentRequest request, Post post) {
+        Comment comment = new Comment();
+        comment.setPost(post);
+        comment.setNickname(request.nickname());
+        comment.setPassword(request.password());
+        comment.setContent(request.content());
+        return comment;
+    }
+
+    public void update(UpdateCommentRequest request) {
+        this.content = request.content();
+    }
 }
