@@ -1,0 +1,10 @@
+version: "3.8"
+services:
+  springboot-app:
+    image: pmg3858/dgswc-inside-server:latest
+    container_name: dgswc-inside
+    ports:
+      - "8080:8080"
+    volumes:
+      - /tmp
+    restart: unless-stopped
