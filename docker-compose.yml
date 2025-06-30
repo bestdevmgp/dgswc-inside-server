@@ -8,3 +8,7 @@ services:
     volumes:
       - /tmp
     restart: unless-stopped
+    environment:
+      - DATABASE_URL=jdbc:mysql://dgswc-inside.c6ne6qs445x4.us-east-1.rds.amazonaws.com
+      - DATABASE_USERNAME=root
+      - DATABASE_PASSWORD=test1206
