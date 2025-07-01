@@ -20,7 +20,7 @@ jobs:
           key: ${{ secrets.EC2_PRIVATE_KEY }}
           port: 22
           script: |
-            cd ~/my-app
+            cd ~/myapp
             git pull
             docker pull pmg3858/dgswc-inside-server:latest
             docker-compose down
