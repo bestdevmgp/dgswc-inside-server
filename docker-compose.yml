@@ -1,0 +1,12 @@
+version: "3.8"
+services:
+  spring-app:
+    image: pmg3858/dgswc-inside-server:latest
+    container_name: dgswc-inside
+    ports:
+      - "8080:8080"
+    environment:
+      SPRING_DATASOURCE_URL: ${SPRING_DATABASE_URL}
+      SPRING_DATASOURCE_USERNAME: ${SPRING_DATASOURCE_USERNAME}
+      SPRING_DATASOURCE_PASSWORD: ${SPRING_DATASOURCE_PASSWORD}
+    restart: always
